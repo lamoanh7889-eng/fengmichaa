@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交通資訊 - 楓茶米休閒農業區</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome 圖示庫 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Noto Sans TC & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tea: {
+                            50: '#f4f7f4',
+                            100: '#e3eae2',
+                            200: '#c7d6c6',
+                            600: '#4A6B46', // 主配色：茶綠色
+                            700: '#3d593a',
+                            800: '#324730',
+                        },
+                        cream: {
+                            50: '#FCFAF7',
+                            100: '#F7F3EA', // 主背景：米白色
+                            200: '#EFE7D8',
+                            300: '#E2D4BB',
+                        },
+                        accent: {
+                            amber: '#D97706',
+                            wood: '#8C6239',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+      <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles/traffic.css">
+
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-tea-600 selection:text-white">
+
+    <!-- Header 頂部導覽列 -->
+    <header class="sticky top-0 z-50 bg-cream-50/95 backdrop-blur-md border-b border-tea-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo 商標 -->
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-full bg-tea-600 text-cream-100 flex items-center justify-center text-lg shadow-md group-hover:scale-105 transition-transform">
+                        <i class="fa-solid font-bold fa-leaf"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-bold tracking-wider text-tea-800 font-serif">楓茶米</span>
+                        <span class="text-[10px] tracking-widest text-tea-600 -mt-1 font-medium">FENG CHA MI</span>
+                    </div>
+                </a>
+
+                <!-- Desktop 選單 (桌面版) -->
+                <nav class="hidden md:flex items-center space-x-8 text-slate-700 font-medium">
+                    <a href="index.html" class="nav-link hover:text-tea-600">認識楓茶米</a>
+                    <a href="resources.html" class="nav-link hover:text-tea-600">在地資源</a>
+                    <a href="itinerary.html" class="nav-link hover:text-tea-600">推薦遊程</a>
+                    <a href="puzzle.html" class="nav-link hover:text-tea-600">解謎任務</a>
+                    <a href="traffic.html" class="nav-link active">交通資訊</a>
+                </nav>
+
+                <!-- 手機版漢堡選單按鈕 -->
+                <div class="md:hidden flex items-center">
+                    <button id="menuBtn" class="p-2 rounded-lg text-tea-800 hover:bg-tea-100 focus:outline-none" aria-label="Toggle Menu">
+                        <i id="menuIcon" class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile 下拉選單 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-cream-50 border-b border-tea-100 px-4 pt-2 pb-6 space-y-3 shadow-lg">
+            <a href="index.html" class="block py-2.5 px-3 rounded-lg text-slate-700 font-medium hover:bg-tea-100 hover:text-tea-800">認識楓茶米</a>
+            <a href="resources.html" class="block py-2.5 px-3 rounded-lg text-slate-700 font-medium hover:bg-tea-100 hover:text-tea-800">在地資源</a>
+            <a href="itinerary.html" class="block py-2.5 px-3 rounded-lg text-slate-700 font-medium hover:bg-tea-100 hover:text-tea-800">推薦遊程</a>
+            <a href="puzzle.html" class="block py-2.5 px-3 rounded-lg text-slate-700 font-medium hover:bg-tea-100 hover:text-tea-800">解謎任務</a>
+            <a href="traffic.html" class="block py-2.5 px-3 rounded-lg bg-tea-600 text-white font-medium">交通資訊</a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- 頁面標題區 (Hero Banner) -->
+        <section class="relative py-16 md:py-20 bg-gradient-to-b from-tea-100/60 to-transparent">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <span class="inline-block py-1 px-4 rounded-full bg-tea-600/10 text-tea-700 text-sm font-semibold tracking-wider mb-4 border border-tea-600/20">
+                    <i class="fa-solid fa-map-location-dot mr-1.5"></i>LOCATION & ACCESS
+                </span>
+                <h1 class="text-3xl md:text-5xl font-bold text-tea-800 tracking-tight mb-4">交通資訊</h1>
+                <p class="text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                    輕鬆規劃您的鄉村慢旅，輕鬆抵達楓茶米。無論是開車自駕、乘搭大眾運輸或騎行綠意步道，開啟一段悠閒的好時光。
+                </p>
+            </div>
+        </section>
+
+        <!-- 交通方式網格區 (.traffic-grid) -->
+        <section class="py-10 md:py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- 3 欄式卡片 Responsive Grid -->
+                <div class="traffic-grid grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- 卡片 1：自行開車 -->
+                    <div class="story-card p-6 md:p-8 flex flex-col justify-between">
+                        <div>
+                            <!-- 圖示與標題 -->
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-14 h-14 rounded-2xl bg-tea-100 text-tea-600 flex items-center justify-center text-2xl shadow-inner">
+                                    <i class="fa-solid fa-car-side"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-tea-800">自行開車</h3>
+                                    <span class="text-xs text-tea-600 font-medium tracking-wider">CAR / DRIVE</span>
+                                </div>
+                            </div>
+                            <!-- 路線說明 -->
+                            <p class="text-slate-600 text-sm md:text-base leading-relaxed mb-6">
+                                國道 1 號林口交流道下，接 105 市道前往楓樹坑 / 國道 3 號鶯歌系統接台 1 線。設有在地社區免費停車場。
+                            </p>
+                        </div>
+                        <!-- 貼心提示 -->
+                        <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg mt-2">
+                            <div class="flex gap-2">
+                                <i class="fa-solid fa-lightbulb text-amber-600 mt-0.5"></i>
+                                <div>
+                                    <p class="text-xs font-bold text-amber-800 mb-0.5">貼心提示</p>
+                                    <p class="text-xs text-amber-900/80 leading-relaxed">假日人潮較多，建議提早出發或多利用大眾運輸。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 卡片 2：大眾運輸 -->
+                    <div class="story-card p-6 md:p-8 flex flex-col justify-between">
+                        <div>
+                            <!-- 圖示與標題 -->
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-14 h-14 rounded-2xl bg-tea-100 text-tea-600 flex items-center justify-center text-2xl shadow-inner">
+                                    <i class="fa-solid fa-bus"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-tea-800">大眾運輸</h3>
+                                    <span class="text-xs text-tea-600 font-medium tracking-wider">PUBLIC TRANSPORT</span>
+                                </div>
+                            </div>
+                            <!-- 路線說明 -->
+                            <p class="text-slate-600 text-sm md:text-base leading-relaxed mb-6">
+                                搭乘台鐵至桃園火車站，轉乘社區巴士或桃園客運往楓樹坑方向；或搭乘捷運至林口站轉乘接駁公車。
+                            </p>
+                        </div>
+                        <!-- 貼心提示 -->
+                        <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg mt-2">
+                            <div class="flex gap-2">
+                                <i class="fa-solid fa-clock text-amber-600 mt-0.5"></i>
+                                <div>
+                                    <p class="text-xs font-bold text-amber-800 mb-0.5">貼心提示</p>
+                                    <p class="text-xs text-amber-900/80 leading-relaxed">社區公車班次約每 30 分鐘一班，請注意發車時刻。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 卡片 3：自行車與步道 -->
+                    <div class="story-card p-6 md:p-8 flex flex-col justify-between">
+                        <div>
+                            <!-- 圖示與標題 -->
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-14 h-14 rounded-2xl bg-tea-100 text-tea-600 flex items-center justify-center text-2xl shadow-inner">
+                                    <i class="fa-solid fa-person-biking"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-tea-800">自行車與步道</h3>
+                                    <span class="text-xs text-tea-600 font-medium tracking-wider">CYCLING & HIKING</span>
+                                </div>
+                            </div>
+                            <!-- 路線說明 -->
+                            <p class="text-slate-600 text-sm md:text-base leading-relaxed mb-6">
+                                沿著桃園龜山綠色自行車道騎行即可抵達；步道愛好者可由楓樹坑步道入口漫步入村，享受綠意。
+                            </p>
+                        </div>
+                        <!-- 貼心提示 -->
+                        <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg mt-2">
+                            <div class="flex gap-2">
+                                <i class="fa-solid fa-circle-info text-amber-600 mt-0.5"></i>
+                                <div>
+                                    <p class="text-xs font-bold text-amber-800 mb-0.5">貼心提示</p>
+                                    <p class="text-xs text-amber-900/80 leading-relaxed">社區提供自行車租借點與牽車休息站。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 地圖區塊 (.map-section) -->
+        <section class="map-section py-12 md:py-16 bg-cream-50 border-t border-tea-100/60">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- 區塊標題 -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-tea-200/60">
+                    <div>
+                        <span class="text-xs font-bold text-tea-600 tracking-widest uppercase">Navigation & Map</span>
+                        <h2 class="text-2xl md:text-3xl font-bold text-tea-800 mt-1">地圖指引與導航</h2>
+                    </div>
+                    <p class="text-sm text-slate-500 mt-2 md:mt-0">
+                        <i class="fa-solid fa-location-dot text-tea-600 mr-1"></i>333 桃園市龜山區風尾街 / 楓樹坑區域
+                    </p>
+                </div>
+
+                <!-- 地圖卡片容器 -->
+                <div class="story-card p-3 md:p-4 bg-white">
+                    <!-- Google Maps iframe (符合規範 height: 350px, rounded: 12px, width: 100%) -->
+                    <iframe 
+                        class="full-map"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14458.125603728646!2d121.34182928643888!3d25.015989218683525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a73a388b77d1%3A0xb308d33cf7ad5d92!2zMzczOeaODmemIq-S8keWWhem-sOalreWFgA!5e0!3m2!1szh-TW!2stw!4v1700000000000!5m2!1szh-TW!2stw" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="楓茶米地圖指引">
+                    </iframe>
+                </div>
+
+                <!-- 導航快捷按鈕列 -->
+                <div class="mt-6 flex flex-wrap justify-center gap-4">
+                    <a href="https://maps.google.com/?q=桃園龜山楓樹坑" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-tea-600 hover:bg-tea-700 text-white font-medium px-6 py-3 rounded-xl shadow-md transition-all">
+                        <i class="fa-solid fa-diamond-turn-right"></i>開啟 Google 地圖導航
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer 頁尾 -->
+    <footer class="bg-tea-800 text-cream-100 py-12 border-t border-tea-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 pb-8 border-b border-tea-700/60">
+                <!-- 品牌簡介 -->
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 rounded-full bg-cream-100 text-tea-800 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-leaf text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold font-serif text-cream-50">楓茶米</span>
+                    </div>
+                    <p class="text-tea-200 text-sm leading-relaxed">
+                        結合楓樹坑歷史古厝、百年茶園與梯田稻香，邀請您一同走進樸實自然、永續共享的鄉村生活體驗。
+                    </p>
+                </div>
+
+                <!-- 聯絡資訊 -->
+                <div>
+                    <h4 class="text-base font-bold text-cream-50 mb-4 tracking-wider">聯絡我們</h4>
+                    <ul class="space-y-2.5 text-sm text-tea-200">
+                        <li class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-phone text-tea-600 bg-tea-100 w-6 h-6 rounded-full flex items-center justify-center text-xs"></i>
+                            <span>服務專線：(03) 320-1234</span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-envelope text-tea-600 bg-tea-100 w-6 h-6 rounded-full flex items-center justify-center text-xs"></i>
+                            <span>電子信箱：service@fengchami.org.tw</span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-location-dot text-tea-600 bg-tea-100 w-6 h-6 rounded-full flex items-center justify-center text-xs"></i>
+                            <span>地址：桃園市龜山區風尾街</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 社群與 LINE 官方帳號 -->
+                <div class="flex flex-col justify-start">
+                    <h4 class="text-base font-bold text-cream-50 mb-4 tracking-wider">加入社群服務</h4>
+                    <p class="text-xs text-tea-200 mb-4">掌握最新活動資訊、實境解謎提示與旅遊諮詢：</p>
+                    <a href="#" onclick="alert('感謝關注！LINE 官方帳號設定完成後將開放加入。'); return false;" class="inline-flex items-center justify-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white font-bold py-3 px-5 rounded-xl shadow-md transition-colors w-fit">
+                        <i class="fa-brands fa-line text-xl"></i>
+                        <span>加入 LINE 官方帳號</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 版權宣告 -->
+            <div class="text-center text-xs text-tea-200/80">
+                <p>&copy; 2026 楓茶米休閒農業區 Feng Cha Mi. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript 邏輯控制 -->
+    <script>
+        // 響應式手機選單切換
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            } else {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-xmark');
+            }
+        });
+    </script>
+</body>
+</html>

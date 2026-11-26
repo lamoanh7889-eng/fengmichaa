@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>實境解謎任務 - 在地文化探索</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles/puzzle.css">
+
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-200">
+
+  <!-- ==========================================
+     1. 頂部導覽列與抬頭 HUD
+     ========================================== -->
+  <header class="sticky top-0 z-50 bg-[#2e5a44] text-white shadow-lg backdrop-blur-md bg-opacity-95">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+      <!-- 品牌/標題 -->
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">🧭</span>
+        <h1 class="font-bold text-lg md:text-xl tracking-wide">實境解謎任務</h1>
+      </div>
+
+      <!-- 抬頭 HUD 資訊 -->
+      <div id="hud" class="flex items-center gap-3 sm:gap-6 bg-[#214231] px-4 py-1.5 rounded-full border border-[#427a5d] shadow-inner text-sm md:text-base">
+        <div class="flex items-center gap-1.5">
+          <span class="text-amber-400">🚩</span>
+          <span class="font-medium">關卡：<span id="hud-stage" class="text-amber-300 font-bold">第 1 關</span></span>
+        </div>
+        <div class="h-4 w-px bg-emerald-700"></div>
+        <div class="flex items-center gap-1.5">
+          <span class="text-amber-400">⭐</span>
+          <span class="font-medium">累積積分：<span id="hud-score" class="text-amber-300 font-bold">0</span> 分</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 進度條 -->
+    <div class="w-full bg-[#1b382b] h-1.5">
+      <div id="progress-bar" class="bg-amber-400 h-1.5 transition-all duration-500 ease-out" style="width: 10%;"></div>
+    </div>
+  </header>
+
+  <!-- ==========================================
+     2. 主要遊戲關卡區域
+     ========================================== -->
+  <main class="max-w-3xl w-full mx-auto px-4 py-8 flex-grow">
+    
+    <!-- 關卡 1：好楓戶古厝 -->
+    <section id="stage-1" class="stage-card bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-stone-200 fade-in">
+      <div class="flex items-center justify-between border-b pb-4 mb-6">
+        <span class="inline-block bg-[#2e5a44] text-amber-200 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full">
+          任務一：歷史探索
+        </span>
+        <button type="button" class="hint-btn text-xs sm:text-sm text-[#d4a373] hover:text-[#b58352] flex items-center gap-1 underline font-medium" data-stage="1">
+          💡 查看關卡線索
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <h2 class="text-2xl font-bold text-[#2e5a44] flex items-center gap-2">
+          <span>🏛️</span> 好楓戶古厝
+        </h2>
+        <p class="text-stone-6xl text-stone-600 leading-relaxed">
+          歡迎來到古色古香的好楓戶古厝。請觀察古厝正門懸掛的正廳匾額與建築立面上的磚雕年代標註，找出這座歷史建築的創立年份（4 位數西元年份密碼）。
+        </p>
+        
+        <div class="bg-amber-50 rounded-xl p-4 border border-amber-200/80 my-4 text-sm text-stone-700 flex items-start gap-3">
+          <span class="text-amber-600 text-lg">📜</span>
+          <div>
+            <strong>現場解謎提示：</strong>
+            找出門樓上的年代磚刻，這四個數字象徵著好楓戶土地發展的起點。
+          </div>
+        </div>
+
+        <!-- 密碼輸入表單 -->
+        <form id="form-stage-1" class="space-y-4 pt-2" onsubmit="return false;">
+          <div>
+            <label for="passcode-1" class="block text-sm font-semibold text-stone-700 mb-2">請輸入 4 位密碼：</label>
+            <div class="relative">
+              <input type="text" id="passcode-1" maxlength="4" placeholder="例如：1234" pattern="[0-9]*" inputmode="numeric"
+                     class="w-full px-4 py-3 text-lg font-mono tracking-widest text-center border-2 border-stone-300 rounded-xl focus:border-[#2e5a44] focus:outline-none transition-colors">
+            </div>
+            <!-- 錯誤訊息呈現區 -->
+            <p id="error-1" class="text-[#e63946] text-sm font-semibold mt-2 hidden flex items-center gap-1">
+              <span>⚠️</span> 密碼不正確！
+            </p>
+          </div>
+
+          <button type="submit" id="btn-stage-1" class="w-full bg-[#2e5a44] hover:bg-[#234534] text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition-all active:scale-[0.99] flex justify-center items-center gap-2">
+            驗證答案 (+100 分)
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 關卡 2：百年茶園 -->
+    <section id="stage-2" class="stage-card bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-stone-200 fade-in" style="display: none;">
+      <div class="flex items-center justify-between border-b pb-4 mb-6">
+        <span class="inline-block bg-[#d4a373] text-white text-xs sm:text-sm font-semibold px-3 py-1 rounded-full">
+          任務二：茶香尋蹤
+        </span>
+        <button type="button" class="hint-btn text-xs sm:text-sm text-[#d4a373] hover:text-[#b58352] flex items-center gap-1 underline font-medium" data-stage="2">
+          💡 查看關卡線索
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <h2 class="text-2xl font-bold text-[#2e5a44] flex items-center gap-2">
+          <span>🍃</span> 百年茶園
+        </h2>
+        <p class="text-stone-600 leading-relaxed">
+          順著古道步入這片傳承百年的老茶園。數一數茶園入口處的三座解說牌上標註的經典東方美人茶解謎密號（3 位數密碼）。
+        </p>
+
+        <div class="bg-amber-50 rounded-xl p-4 border border-amber-200/80 my-4 text-sm text-stone-700 flex items-start gap-3">
+          <span class="text-amber-600 text-lg">🍵</span>
+          <div>
+            <strong>現場解謎提示：</strong>
+            尋找茶園涼亭柱子上的神秘數字組合，象徵吉利與發發發的幸運符號。
+          </div>
+        </div>
+
+        <!-- 密碼輸入表單 -->
+        <form id="form-stage-2" class="space-y-4 pt-2" onsubmit="return false;">
+          <div>
+            <label for="passcode-2" class="block text-sm font-semibold text-stone-700 mb-2">請輸入 3 位密碼：</label>
+            <input type="text" id="passcode-2" maxlength="3" placeholder="例如：123" pattern="[0-9]*" inputmode="numeric"
+                   class="w-full px-4 py-3 text-lg font-mono tracking-widest text-center border-2 border-stone-300 rounded-xl focus:border-[#2e5a44] focus:outline-none transition-colors">
+            <!-- 錯誤訊息呈現區 -->
+            <p id="error-2" class="text-[#e63946] text-sm font-semibold mt-2 hidden flex items-center gap-1">
+              <span>⚠️</span> 密碼不正確！
+            </p>
+          </div>
+
+          <button type="submit" id="btn-stage-2" class="w-full bg-[#2e5a44] hover:bg-[#234534] text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition-all active:scale-[0.99] flex justify-center items-center gap-2">
+            驗證答案 (+150 分)
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 關卡 3：梯田水圳 -->
+    <section id="stage-3" class="stage-card bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-stone-200 fade-in" style="display: none;">
+      <div class="flex items-center justify-between border-b pb-4 mb-6">
+        <span class="inline-block bg-[#2e5a44] text-amber-200 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full">
+          終極任務：水脈生態
+        </span>
+        <button type="button" class="hint-btn text-xs sm:text-sm text-[#d4a373] hover:text-[#b58352] flex items-center gap-1 underline font-medium" data-stage="3">
+          💡 查看關卡線索
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <h2 class="text-2xl font-bold text-[#2e5a44] flex items-center gap-2">
+          <span>🌊</span> 梯田水圳
+        </h2>
+        <p class="text-stone-600 leading-relaxed">
+          站在景觀梯田頂端，傾聽古老水圳潺潺流水聲。最後一道關卡需要根據水圳解說告示牌上的「水資源守護愛心代碼」（3 位數密碼）來開啟寶箱。
+        </p>
+
+        <div class="bg-amber-50 rounded-xl p-4 border border-amber-200/80 my-4 text-sm text-stone-700 flex items-start gap-3">
+          <span class="text-amber-600 text-lg">💧</span>
+          <div>
+            <strong>現場解謎提示：</strong>
+            珍惜水源、愛護山林，密碼諧音代表著對這片土地最深情的告白語。
+          </div>
+        </div>
+
+        <!-- 密碼輸入表單 -->
+        <form id="form-stage-3" class="space-y-4 pt-2" onsubmit="return false;">
+          <div>
+            <label for="passcode-3" class="block text-sm font-semibold text-stone-700 mb-2">請輸入 3 位密碼：</label>
+            <input type="text" id="passcode-3" maxlength="3" placeholder="例如：123" pattern="[0-9]*" inputmode="numeric"
+                   class="w-full px-4 py-3 text-lg font-mono tracking-widest text-center border-2 border-stone-300 rounded-xl focus:border-[#2e5a44] focus:outline-none transition-colors">
+            <!-- 錯誤訊息呈現區 -->
+            <p id="error-3" class="text-[#e63946] text-sm font-semibold mt-2 hidden flex items-center gap-1">
+              <span>⚠️</span> 密碼不正確！
+            </p>
+          </div>
+
+          <button type="submit" id="btn-stage-3" class="w-full bg-[#2e5a44] hover:bg-[#234534] text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition-all active:scale-[0.99] flex justify-center items-center gap-2">
+            驗證答案 (+200 分)
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 5. 通關結算區 (success-card) -->
+    <section id="success-card" class="success-card bg-white rounded-2xl p-6 sm:p-10 shadow-xl border-2 border-amber-300 text-center fade-in" style="display: none;">
+      <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-amber-300">
+        <span class="text-4xl">🏆</span>
+      </div>
+
+      <h2 class="text-3xl font-extrabold text-[#2e5a44] mb-2">恭喜完成所有解謎任務！</h2>
+      <p class="text-stone-600 text-base mb-6">您已順利走訪好楓戶古厝、百年茶園與梯田水圳，深入了解在地豐富文化資源。</p>
+
+      <!-- 結算成績板 -->
+      <div class="bg-stone-50 border border-stone-200 rounded-xl p-6 mb-6 max-w-md mx-auto space-y-4">
+        <div>
+          <span class="text-sm text-stone-500 uppercase tracking-wider block mb-1">最終總得分</span>
+          <span id="final-score" class="text-5xl font-black text-amber-600">450</span>
+          <span class="text-stone-600 font-bold ml-1">分</span>
+        </div>
+
+        <div class="h-px bg-stone-200 w-full my-3"></div>
+
+        <div>
+          <span class="text-sm text-stone-500 block mb-1">榮獲稱號</span>
+          <span id="honor-title" class="inline-block text-lg font-bold text-[#2e5a44] bg-emerald-100 px-4 py-1.5 rounded-full border border-emerald-300">
+            楓戶探險大師 🌿
+          </span>
+        </div>
+      </div>
+
+      <!-- 按鈕操作區 -->
+      <div class="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
+        <button id="btn-restart" class="w-full sm:w-1/2 bg-[#2e5a44] hover:bg-[#234534] text-white font-bold py-3 px-6 rounded-xl shadow transition-all">
+          🔄 重新挑戰
+        </button>
+        <button onclick="window.location.href='resources.html'" class="w-full sm:w-1/2 bg-[#d4a373] hover:bg-[#b58352] text-white font-bold py-3 px-6 rounded-xl shadow transition-all">
+          📖 查看在地資源
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 提示 Modal 彈窗 -->
+  <div id="hint-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-stone-200 fade-in">
+      <div class="flex justify-between items-center border-b pb-2">
+        <h3 class="text-lg font-bold text-[#2e5a44] flex items-center gap-1.5">
+          <span>💡</span> 任務線索提示
+        </h3>
+        <button id="close-modal" class="text-stone-400 hover:text-stone-600 text-2xl font-bold leading-none">&times;</button>
+      </div>
+      <p id="hint-text" class="text-stone-600 text-sm leading-relaxed">
+        提示內容...
+      </p>
+      <button id="btn-close-hint" class="w-full bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold py-2.5 rounded-xl transition-colors">
+        我知道了
+      </button>
+    </div>
+  </div>
+
+  <!-- 頁尾 -->
+  <footer class="bg-stone-800 text-stone-400 text-center py-4 text-sm mt-8 border-t border-stone-700">
+    <p>© 2026 在地資源與實境解謎互動網站. All rights reserved.</p>
+  </footer>
+
+  <!-- ==========================================
+     3. 原生 JavaScript 邏輯控制
+     ========================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 遊戲狀態數據
+      const gameState = {
+        score: 0,
+        currentStage: 1,
+        stageAnswers: {
+          1: "1924",
+          2: "888",
+          3: "520"
+        },
+        stageScores: {
+          1: 100,
+          2: 150,
+          3: 200
+        },
+        hints: {
+          1: "【好楓戶古厝線索】：建於日治大正十三年，請轉換為西元紀年數字 (19XX)。",
+          2: "【百年茶園線索】：華人最喜愛的吉利三位數，代表發發發！",
+          3: "【梯田水圳線索】：諧音表達「我愛你」的三位數字。"
+        }
+      };
+
+      // 取得 DOM 元素
+      const hudStage = document.getElementById('hud-stage');
+      const hudScore = document.getElementById('hud-score');
+      const progressBar = document.getElementById('progress-bar');
+
+      const stage1 = document.getElementById('stage-1');
+      const stage2 = document.getElementById('stage-2');
+      const stage3 = document.getElementById('stage-3');
+      const successCard = document.getElementById('success-card');
+
+      const hintModal = document.getElementById('hint-modal');
+      const hintText = document.getElementById('hint-text');
+      const closeModal = document.getElementById('close-modal');
+      const btnCloseHint = document.getElementById('btn-close-hint');
+
+      // 更新 HUD 與進度
+      function updateHUD() {
+        if (gameState.currentStage <= 3) {
+          hudStage.innerText = `第 ${gameState.currentStage} 關`;
+        } else {
+          hudStage.innerText = "已通關";
+        }
+        hudScore.innerText = gameState.score;
+
+        // 計算進度條比例 (全通關 100%)
+        const progressPercentage = ((gameState.currentStage - 1) / 3) * 100 || 10;
+        progressBar.style.width = `${Math.min(progressPercentage, 100)}%`;
+      }
+
+      // 驗證關卡答案主函式
+      function validateStage(stageNum, inputId, errorId, currentStageEl, nextStageEl) {
+        const inputEl = document.getElementById(inputId);
+        const errorEl = document.getElementById(errorId);
+        const userValue = inputEl.value.trim();
+
+        // 判斷密碼正確與否
+        if (userValue === gameState.stageAnswers[stageNum]) {
+          // 隱藏錯誤提示
+          errorEl.classList.add('hidden');
+          
+          // 加分與進階
+          gameState.score += gameState.stageScores[stageNum];
+          gameState.currentStage = stageNum + 1;
+          updateHUD();
+
+          // 使用 style.display 控制關卡顯示
+          currentStageEl.style.display = 'none';
+
+          if (nextStageEl) {
+            nextStageEl.style.display = 'block';
+            nextStageEl.classList.add('fade-in');
+          } else {
+            // 抵達通關結算區
+            showCompletionScreen();
+          }
+        } else {
+          // 密碼錯誤處理：顯示紅字「密碼不正確！」與搖晃動畫
+          errorEl.classList.remove('hidden');
+          currentStageEl.classList.remove('shake');
+          // 重新觸發 CSS 動畫
+          void currentStageEl.offsetWidth;
+          currentStageEl.classList.add('shake');
+        }
+      }
+
+      // 顯示通關結算頁面
+      function showCompletionScreen() {
+        successCard.style.display = 'block';
+        successCard.classList.add('fade-in');
+
+        document.getElementById('final-score').innerText = gameState.score;
+
+        // 根據積分設定榮譽稱號
+        const honorTitleEl = document.getElementById('honor-title');
+        if (gameState.score >= 450) {
+          honorTitleEl.innerText = "楓戶探險大師 🌿";
+        } else {
+          honorTitleEl.innerText = "在地文化解謎達人 ✨";
+        }
+        
+        // 進度條滿格
+        progressBar.style.width = "100%";
+      }
+
+      // 事件監聽：第一關表單送出
+      document.getElementById('form-stage-1').addEventListener('submit', function(e) {
+        e.preventDefault();
+        validateStage(1, 'passcode-1', 'error-1', stage1, stage2);
+      });
+
+      // 事件監聽：第二關表單送出
+      document.getElementById('form-stage-2').addEventListener('submit', function(e) {
+        e.preventDefault();
+        validateStage(2, 'passcode-2', 'error-2', stage2, stage3);
+      });
+
+      // 事件監聽：第三關表單送出
+      document.getElementById('form-stage-3').addEventListener('submit', function(e) {
+        e.preventDefault();
+        validateStage(3, 'passcode-3', 'error-3', stage3, null);
+      });
+
+      // 事件監聽：提示彈窗開啟
+      document.querySelectorAll('.hint-btn').forEach(button => {
+        button.addEventListener('click', function() {
+          const stage = this.getAttribute('data-stage');
+          hintText.innerText = gameState.hints[stage] || "暫無提示";
+          hintModal.classList.remove('hidden');
+        });
+      });
+
+      // 事件監聽：提示彈窗關閉
+      function hideHintModal() {
+        hintModal.classList.add('hidden');
+      }
+      closeModal.addEventListener('click', hideHintModal);
+      btnCloseHint.addEventListener('click', hideHintModal);
+      hintModal.addEventListener('click', function(e) {
+        if (e.target === hintModal) hideHintModal();
+      });
+
+      // 事件監聽：重新開始遊戲
+      document.getElementById('btn-restart').addEventListener('click', function() {
+        gameState.score = 0;
+        gameState.currentStage = 1;
+        updateHUD();
+
+        // 重置清空所有輸入框與錯誤狀態
+        [1, 2, 3].forEach(num => {
+          const input = document.getElementById(`passcode-${num}`);
+          const error = document.getElementById(`error-${num}`);
+          if (input) input.value = '';
+          if (error) error.classList.add('hidden');
+        });
+
+        // 重置關卡顯示 (用 style.display)
+        successCard.style.display = 'none';
+        stage2.style.display = 'none';
+        stage3.style.display = 'none';
+        stage1.style.display = 'block';
+      });
+
+      // 初始化抬頭 HUD
+      updateHUD();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>推薦遊程 - 楓茶米 Feng-Cha-Mi</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tea: {
+                            DEFAULT: '#4A6B46',
+                            dark: '#395436',
+                            light: '#62875D',
+                            pale: '#EBF1EA',
+                        },
+                        rice: {
+                            DEFAULT: '#F7F3EA',
+                            warm: '#EFE7D6',
+                            dark: '#D8CBB5',
+                        },
+                        amber: {
+                            warm: '#D97706',
+                            rustic: '#C25E00',
+                        },
+                        charcoal: '#2D3A2C',
+                        bodytext: '#555555',
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+      <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles/itinerary.css">
+
+</head>
+<body class="bg-rice min-h-screen flex flex-col antialiased">
+
+    <!-- 1. Header 導覽列 -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-rice/90 backdrop-blur-md border-b border-tea/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                
+                <!-- 網站 Logo「楓茶米」 -->
+                <a href="index.html" class="flex items-center gap-3 group focus:outline-none">
+                    <div class="w-11 h-11 rounded-full bg-tea text-rice flex items-center justify-center text-xl shadow-md group-hover:scale-105 transition-transform">
+                        <span class="font-serif-tc font-bold text-lg">楓</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-serif-tc text-2xl font-bold tracking-widest text-tea group-hover:text-tea-dark transition-colors">
+                            楓茶米
+                        </span>
+                        <span class="text-[10px] tracking-widest text-tea/70 uppercase font-sans -mt-1">
+                            Feng-Cha-Mi Rural Tour
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Desktop 選單 (推薦遊程為 Active) -->
+                <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                    <a href="index.html#about" class="px-3 py-2 rounded-full text-sm font-medium text-charcoal hover:text-tea hover:bg-tea/10 transition-all">
+                        認識楓茶米
+                    </a>
+                    <a href="resources.html" class="px-3 py-2 rounded-full text-sm font-medium text-charcoal hover:text-tea hover:bg-tea/10 transition-all">
+                        在地資源
+                    </a>
+                    <!-- Active 狀態 -->
+                    <a href="itinerary.html" class="px-3 py-2 rounded-full text-sm font-medium bg-tea text-white shadow-sm transition-all" aria-current="page">
+                        推薦遊程
+                    </a>
+                    <a href="puzzle.html" class="px-3 py-2 rounded-full text-sm font-medium text-charcoal hover:text-tea hover:bg-tea/10 transition-all flex items-center gap-1">
+                        <i class="fa-solid fa-compass text-amber-rustic text-xs"></i>
+                        解謎任務
+                    </a>
+                    <a href="traffic.html" class="px-3 py-2 rounded-full text-sm font-medium text-charcoal hover:text-tea hover:bg-tea/10 transition-all">
+                        交通資訊
+                    </a>
+                </nav>
+
+                <!-- 右側按鈕 -->
+                <div class="hidden lg:flex items-center gap-3">
+                    <a href="#footer" class="btn-primary text-xs tracking-wider px-4 py-2.5 rounded-full font-medium inline-flex items-center gap-2">
+                        <i class="fa-solid fa-envelope"></i> 聯絡我們
+                    </a>
+                </div>
+
+                <!-- 手機版 Hamburger 選單按鈕 -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" type="button" class="text-tea p-2 rounded-lg hover:bg-tea/10 focus:outline-none" aria-label="切換選單">
+                        <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 手機版展開選單 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-rice border-b border-tea/10 px-4 pt-2 pb-6 space-y-2 shadow-lg">
+            <a href="index.html#about" class="mobile-link block px-4 py-2.5 rounded-xl text-base font-medium text-charcoal hover:bg-tea/10 hover:text-tea">
+                <i class="fa-solid fa-leaf text-tea w-6"></i>認識楓茶米
+            </a>
+            <a href="resources.html" class="mobile-link block px-4 py-2.5 rounded-xl text-base font-medium text-charcoal hover:bg-tea/10 hover:text-tea">
+                <i class="fa-solid fa-mountain-sun text-tea w-6"></i>在地資源
+            </a>
+            <a href="itinerary.html" class="mobile-link block px-4 py-2.5 rounded-xl text-base font-medium bg-tea text-white">
+                <i class="fa-solid fa-map-location-dot w-6"></i>推薦遊程
+            </a>
+            <a href="puzzle.html" class="mobile-link block px-4 py-2.5 rounded-xl text-base font-medium text-charcoal hover:bg-tea/10 hover:text-tea">
+                <i class="fa-solid fa-puzzle-piece text-amber-rustic w-6"></i>解謎任務
+            </a>
+            <a href="traffic.html" class="mobile-link block px-4 py-2.5 rounded-xl text-base font-medium text-charcoal hover:bg-tea/10 hover:text-tea">
+                <i class="fa-solid fa-bus text-tea w-6"></i>交通資訊
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-20">
+
+        <!-- 2. 頁面標題區 (Hero / Page Header) -->
+        <section class="bg-gradient-to-b from-rice-warm/60 to-rice py-16 md:py-20 border-b border-tea/10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <span class="text-xs sm:text-sm font-semibold tracking-widest text-tea uppercase bg-tea/10 px-4 py-1.5 rounded-full inline-block mb-4">
+                    RECOMMENDED ITINERARIES
+                </span>
+                <!-- 主標題 -->
+                <h1 class="font-serif-tc text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal mb-4 tracking-wide">
+                    精選推薦遊程
+                </h1>
+                <div class="w-16 h-1 bg-tea mx-auto rounded-full mb-6"></div>
+                <!-- 副標題 -->
+                <p class="text-base sm:text-lg text-bodytext max-w-2xl mx-auto leading-relaxed font-light">
+                    結合社區推薦路線，為您規劃最佳農山體驗行程
+                </p>
+            </div>
+        </section>
+
+        <!-- 3. 遊程區塊（兩大精選遊程） -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 space-y-16">
+
+            <!-- 【遊程卡片 1】：3.5 小時－半日慢遊茶鄉 -->
+            <article class="bg-white rounded-3xl p-6 md:p-10 border border-tea/10 shadow-sm card-hover">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    
+                    <!-- 左側 / 上側：遊程簡介與圖片 -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="flex flex-wrap items-center gap-3">
+                            <span class="bg-tea text-white text-xs font-semibold px-3 py-1.5 rounded-full tracking-wider flex items-center gap-1.5">
+                                <i class="fa-solid fa-users text-rice"></i> 社區推薦路線
+                            </span>
+                            <span class="text-xs font-medium text-tea bg-tea/10 px-3 py-1.5 rounded-full">
+                                <i class="fa-regular fa-clock me-1"></i> 約 3.5 小時
+                            </span>
+                        </div>
+
+                        <h2 class="font-serif-tc text-2xl md:text-3xl font-bold text-charcoal leading-tight">
+                            3.5 小時－半日慢遊茶鄉
+                        </h2>
+
+                        <p class="text-bodytext text-base leading-relaxed">
+                            適合午後前來放鬆，踏入茶園與步道，感受山林間的微風與茶香。
+                        </p>
+
+                        <!-- 代表性圖片 -->
+                        <div class="img-container-4-3 img-hover-zoom shadow-sm border border-tea/10">
+                            <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&q=80&w=800" 
+                                 alt="半日慢遊茶鄉" 
+                                 onerror="handleImageError(this, '半日慢遊茶鄉', 'fa-mug-hot')">
+                        </div>
+
+                        <!-- 按鈕：前往交通指引 -->
+                        <div class="pt-2">
+                            <a href="traffic.html" class="btn-primary w-full sm:w-auto px-6 py-3.5 rounded-full text-sm font-medium inline-flex items-center justify-center gap-2 shadow-sm">
+                                <span>前往交通指引</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 右側 / 下側：動線與社區提醒 -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <h3 class="font-serif-tc text-lg font-bold text-charcoal flex items-center gap-2 border-b border-tea/10 pb-3">
+                            <i class="fa-solid fa-route text-tea"></i> 遊程時間動線安排
+                        </h3>
+
+                        <!-- 時段動線 (.route-box) -->
+                        <div class="route-box">
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
+                                    <span class="font-serif-tc font-bold text-charcoal text-base">步道慢行</span>
+                                    <span class="text-xs font-semibold text-tea bg-tea-pale px-2.5 py-1 rounded-md w-fit">13:30 – 14:30</span>
+                                </div>
+                                <p class="text-xs text-bodytext/80">漫步於楓樹坑步道，享受綠意圍繞的清爽芬多精。</p>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
+                                    <span class="font-serif-tc font-bold text-charcoal text-base">採茶體驗</span>
+                                    <span class="text-xs font-semibold text-tea bg-tea-pale px-2.5 py-1 rounded-md w-fit">14:30 – 15:30</span>
+                                </div>
+                                <p class="text-xs text-bodytext/80">戴上採茶笠帽，由茶農帶領親手採摘一心二葉鮮芽。</p>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
+                                    <span class="font-serif-tc font-bold text-charcoal text-base">品茗時光</span>
+                                    <span class="text-xs font-semibold text-tea bg-tea-pale px-2.5 py-1 rounded-md w-fit">15:30 – 17:00</span>
+                                </div>
+                                <p class="text-xs text-bodytext/80">體驗傳統茶藝品嘗，在迴廊間細品甘醇茶湯與佐茶小點。</p>
+                            </div>
+                        </div>
+
+                        <!-- 社區推薦建議提示框 (.recommend-box) -->
+                        <div class="recommend-box space-y-1.5">
+                            <div class="flex items-center gap-2 text-tea font-bold text-sm">
+                                <i class="fa-solid fa-lightbulb text-amber-warm"></i>
+                                <span>社區居民貼心提醒</span>
+                            </div>
+                            <p class="text-xs sm:text-sm text-charcoal/90 leading-relaxed font-light">
+                                山區午後氣候多變，建議攜帶輕便雨具與防蚊用品；茶園坡度平緩，穿著舒適運動鞋即可輕鬆步行。
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </article>
+
+
+            <!-- 【遊程卡片 2】：6.5 小時－一日農山體驗 -->
+            <article class="bg-white rounded-3xl p-6 md:p-10 border border-tea/10 shadow-sm card-hover">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    
+                    <!-- 左側 / 上側：遊程簡介與圖片 -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="flex flex-wrap items-center gap-3">
+                            <span class="bg-amber-rustic text-white text-xs font-semibold px-3 py-1.5 rounded-full tracking-wider flex items-center gap-1.5">
+                                <i class="fa-solid fa-house-chimney-window text-rice"></i> 社區深度體驗
+                            </span>
+                            <span class="text-xs font-medium text-tea bg-tea/10 px-3 py-1.5 rounded-full">
+                                <i class="fa-regular fa-clock me-1"></i> 約 6.5 小時
+                            </span>
+                        </div>
+
+                        <h2 class="font-serif-tc text-2xl md:text-3xl font-bold text-charcoal leading-tight">
+                            6.5 小時－一日農山體驗
+                        </h2>
+
+                        <p class="text-bodytext text-base leading-relaxed">
+                            深度走入楓茶米，從歷史古厝、手作傳統米食到百年梯田與茶香，體驗最完整的農村生活。
+                        </p>
+
+                        <!-- 代表性圖片 -->
+                        <div class="img-container-4-3 img-hover-zoom shadow-sm border border-tea/10">
+                            <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=800" 
+                                 alt="一日農山體驗" 
+                                 onerror="handleImageError(this, '一日農山體驗', 'fa-wheat-awn')">
+                        </div>
+
+                        <!-- 按鈕：前往交通指引 -->
+                        <div class="pt-2">
+                            <a href="traffic.html" class="btn-primary w-full sm:w-auto px-6 py-3.5 rounded-full text-sm font-medium inline-flex items-center justify-center gap-2 shadow-sm">
+                                <span>前往交通指引</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 右側 / 下側：動線與社區提醒 -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <h3 class="font-serif-tc text-lg font-bold text-charcoal flex items-center gap-2 border-b border-tea/10 pb-3">
+                            <i class="fa-solid fa-route text-tea"></i> 遊程時間動線安排
+                        </h3>
+
+                        <!-- 時段動線 (.route-box) -->
+                        <div class="route-box">
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
+                                    <span class="font-serif-tc font-bold text-charcoal text-base">古厝巡禮</span>
+                                    <span class="text-xs font-semibold text-tea bg-tea-pale px-2.5 py-1 rounded-md w-fit">10:00 – 11:30</span>
+                                </div>
+                                <p class="text-xs text-bodytext/80">探索在地聚落故事，穿梭百年磚瓦間聆聽文史故事。</p>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
+                                    <span class="font-serif-tc font-bold text-charcoal text-base">米食 DIY 與在地午餐</span>
+                                    <span class="text-xs font-semibold text-tea bg-tea-pale px-2.5 py-1 rounded-md w-fit">11:30 – 13:00</span>
+                                </div>
+                                <p class="text-xs text-bodytext/80">手作傳統紅龜粿/草仔粿，享用由在地新鮮食材入菜的農家午膳。</p>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
+                                    <span class="font-serif-tc font-bold text-charcoal text-base">水圳梯田導覽</span>
+                                    <span class="text-xs font-semibold text-tea bg-tea-pale px-2.5 py-1 rounded-md w-fit">13:00 – 14:30</span>
+                                </div>
+                                <p class="text-xs text-bodytext/80">走訪景觀梯田與古老水圳，認識農山永續水資源脈絡。</p>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
+                                    <span class="font-serif-tc font-bold text-charcoal text-base">茶香品茗與手作體驗</span>
+                                    <span class="text-xs font-semibold text-tea bg-tea-pale px-2.5 py-1 rounded-md w-fit">14:30 – 16:30</span>
+                                </div>
+                                <p class="text-xs text-bodytext/80">慢享品茶時光，並親手調配專屬於自己的舒壓草本茶包帶回家。</p>
+                            </div>
+                        </div>
+
+                        <!-- 社區推薦建議提示框 (.recommend-box) -->
+                        <div class="recommend-box space-y-1.5">
+                            <div class="flex items-center gap-2 text-tea font-bold text-sm">
+                                <i class="fa-solid fa-lightbulb text-amber-warm"></i>
+                                <span>社區居民貼心提醒</span>
+                            </div>
+                            <p class="text-xs sm:text-sm text-charcoal/90 leading-relaxed font-light">
+                                米食 DIY 需提早備料，建議提前預約體驗；體驗包含農村古厝漫步，請記得帶上充沛的好奇心與相機紀錄美景！
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- 4. Footer 頁尾 -->
+    <footer id="footer" class="bg-tea text-white pt-16 pb-8 mt-16 border-t border-tea-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pb-12 border-b border-white/10">
+                
+                <!-- 欄位 1：品牌簡介 -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-rice text-tea flex items-center justify-center text-lg font-serif-tc font-bold">
+                            楓
+                        </div>
+                        <span class="font-serif-tc text-2xl font-bold tracking-widest text-rice">
+                            楓茶米
+                        </span>
+                    </div>
+                    <p class="text-rice/80 text-sm leading-relaxed font-light">
+                        走進楓樹坑，感受茶香與稻香交織的溫暖土地。我們致力於農村永續發展與生態文化傳承。
+                    </p>
+                </div>
+
+                <!-- 欄位 2：聯絡資訊 -->
+                <div class="space-y-3">
+                    <h4 class="font-serif-tc text-lg font-semibold text-rice mb-2 border-l-2 border-amber-warm pl-2">
+                        聯絡我們
+                    </h4>
+                    <p class="text-sm text-rice/80 flex items-center gap-2">
+                        <i class="fa-solid fa-phone text-amber-warm w-4"></i>
+                        <span>電話：(03) 320-1234</span>
+                    </p>
+                    <p class="text-sm text-rice/80 flex items-center gap-2">
+                        <i class="fa-solid fa-envelope text-amber-warm w-4"></i>
+                        <span>Email：service@fengchami.org.tw</span>
+                    </p>
+                    <p class="text-sm text-rice/80 flex items-center gap-2">
+                        <i class="fa-solid fa-location-dot text-amber-warm w-4"></i>
+                        <span>地址：桃園市龜山區楓樹里風尾街</span>
+                    </p>
+                </div>
+
+                <!-- 欄位 3：社群與官方帳號 -->
+                <div class="space-y-4">
+                    <h4 class="font-serif-tc text-lg font-semibold text-rice mb-2 border-l-2 border-amber-warm pl-2">
+                        加入官方帳號
+                    </h4>
+                    <p class="text-sm text-rice/80 font-light">
+                        獲取最新的四季活動、導覽預約與限定體驗資訊。
+                    </p>
+                    <div>
+                        <a href="https://line.me" target="_blank" rel="noopener noreferrer" 
+                           class="inline-flex items-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white px-5 py-2.5 rounded-full text-sm font-medium shadow-md transition-all">
+                            <i class="fa-brands fa-line text-lg"></i>
+                            <span>加入 LINE 官方帳號</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 版權宣告與條款 -->
+            <div class="pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-rice/60 gap-4">
+                <p>© 2026 楓茶米 Feng-Cha-Mi. All Rights Reserved.</p>
+                <div class="flex gap-6">
+                    <a href="index.html" class="hover:text-rice transition-colors">返回首頁</a>
+                    <a href="resources.html" class="hover:text-rice transition-colors">在地資源</a>
+                    <a href="itinerary.html" class="hover:text-rice transition-colors">推薦遊程</a>
+                    <a href="#navbar" class="hover:text-rice transition-colors">回到頁首 <i class="fa-solid fa-arrow-up"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript 腳本：選單動態與圖片 onerror 自動降級機制 -->
+    <script>
+        // 1. 圖片載入失敗降級機制 (onerror 觸發)
+        function handleImageError(imgElement, titleText, iconClass) {
+            const container = imgElement.parentElement;
+            container.innerHTML = `
+                <div class="w-full h-full bg-rice-warm/80 flex flex-col items-center justify-center p-4 text-center border border-tea/10">
+                    <i class="fa-solid ${iconClass || 'fa-image'} text-3xl text-tea/50 mb-2"></i>
+                    <span class="text-sm font-serif-tc font-medium text-tea/80">${titleText || '推薦遊程影像'}</span>
+                    <span class="text-[10px] text-charcoal/40 mt-1">楓茶米 ‧ 圖片載入中</span>
+                </div>
+            `;
+        }
+
+        // 2. 手機版選單切換開關
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const isHidden = mobileMenu.classList.contains('hidden');
+                if (isHidden) {
+                    mobileMenu.classList.remove('hidden');
+                    menuIcon.classList.remove('fa-bars');
+                    menuIcon.classList.add('fa-xmark');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.classList.remove('fa-xmark');
+                    menuIcon.classList.add('fa-bars');
+                }
+            });
+
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.classList.remove('fa-xmark');
+                    menuIcon.classList.add('fa-bars');
+                });
+            });
+        }
+
+        // 3. 滾動時導覽列動態效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar?.classList.add('navbar-scrolled');
+            } else {
+                navbar?.classList.remove('navbar-scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
